@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Emergency Service</title>
+
+  <!-- Tailwind + DaisyUI -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@^3/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@latest/dist/full.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 font-sans p-6">
+
+  <!-- Header with stats -->
+  <div class="flex justify-between items-center bg-white shadow-md p-4 rounded mb-6">
+    <div class="text-lg font-semibold">Coins: <span id="coins">100</span></div>
+    <div class="text-lg font-semibold">Hearts: <span id="hearts">0</span></div>
+    <div class="text-lg font-semibold">Copies: <span id="copies">0</span></div>
+  </div>
+
+  <!-- Cards Grid -->
+  <div class="grid grid-cols-3 gap-4 mb-6">
+    <!-- Example Card -->
+    <script>
+      const numbers = [
+        "01711111111", "01822222222", "01933333333",
+        "01644444444", "01555555555", "01766666666",
+        "01877777777", "01988888888", "01699999999"
+      ];
+    </script>
+    <div id="card-container" class="contents"></div>
+  </div>
+
+  <!-- Call History -->
+  <div class="bg-white shadow-md p-4 rounded">
+    <h2 class="text-xl font-bold mb-2">Call History</h2>
+    <ul id="call-history" class="list-disc pl-5 text-gray-700"></ul>
+  </div>
+
+  <script>
+    let coins = 100;
+    let hearts = 0;
+    let copies = 0;
+
+    const cardContainer = document.getElementById('card-container');
+    const callHistory = document.getElementById('call-history');
+
+    numbers.forEach(num => {
+      const card = document.createElement('div');
+      card.className = 'bg-white shadow-md rounded p-4 flex flex-col items-center';
+      card.innerHTML = `
+        <p class="text-lg font-bold mb-2">${num}</p>
+        <div class="flex gap-2">
+          <button class="btn btn-sm btn-primary copy-btn">Copy</button>
+          <button class="btn btn-sm btn-secondary heart-btn">❤</button>
+          <button class="btn btn-sm btn-accent call-btn">Call</button>
+        </div>
+      `;
+      cardContainer.appendChild(card);
+
+      const copyBtn = card.querySelector('.copy-btn');
+      const heartBtn = card.querySelector('.heart-btn');
+      const callBtn = card.querySelector('.call-btn');
+
+      copyBtn.addEventListener('click', () => {
+        navigator.clipboard.writeText(num);
+        copies++;
+        document.getElementById('copies').textContent = copies;
+      });
+
+      heartBtn.addEventListener('click', () => {
+        hearts++;
+        document.getElementById('hearts').textContent = hearts;
+      });
+
+      callBtn.addEventListener('click', () => {
+        if (coins >= 20) {
+          coins -= 20;
+          document.getElementById('coins').textContent = coins;
+          alert(`Calling ${num}...`);
+
+          const now = new Date();
+          const timeString = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+          const li = document.createElement('li');
+          li.textContent = `${num} at ${timeString}`;
+          callHistory.appendChild(li);
+        } else {
+          alert('Not enough coins to make a call!');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
