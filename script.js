@@ -33,7 +33,7 @@ for (let i = 0; i < callbtn.length; i++) {
         if (coincount >= 20) {
             let title = this.closest('div').parentElement.querySelector(".title").innerText;
             let number = this.closest('div').parentElement.querySelector(".number").innerText;
-            alert(`calling -${title} -${number} `);
+            alert(`calling..... ${title} -${number} `);
             coincount = coincount - 20;
             document.getElementById('coin-count').innerText = coincount;
 
@@ -42,18 +42,15 @@ for (let i = 0; i < callbtn.length; i++) {
             let time = new Date();
             let time_string = time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
             call_item.innerHTML =
-                `
-                    <div class="items bg-[#FAFAFA] flex justify-between items-center mt-[10px]  p-[10px] rounded-[5px] shadow-md"> 
+                `<div class="items bg-[#FAFAFA] flex justify-between items-center mt-[10px]  p-[10px] rounded-[5px] shadow-md"> 
                         <div>
                             <h2 class="font-bold">${title}</h2>
                             <p>${number}</p>
                         </div>
                         <span class="call-time w-2/5 text-end bg-[#FAFAFA]  ">${time_string}</span>
+                </div>`;
 
-                    </div> 
-                `;
-
-            call_history.appendChild(call_item);
+            call_history.append(call_item);
 
         }
         else {
@@ -63,11 +60,10 @@ for (let i = 0; i < callbtn.length; i++) {
 
 }
 
-let clearbtn=document.getElementById('clear');
-clearbtn.addEventListener('click',function(){
-    let item=document.getElementsByClassName('items');
-    for(let i=item.length-1;i=>0.;i--)
-    {
+let clearbtn = document.getElementById('clear');
+clearbtn.addEventListener('click', function () {
+    let item = document.getElementsByClassName('items');
+    for (let i = item.length - 1; i => 0.; i--) {
         item[i].remove();
     }
 
